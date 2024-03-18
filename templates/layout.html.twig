@@ -52,6 +52,8 @@
                {% set active_route = 'unread' %}
             {% elseif current_route == 'untagged' %}
                {% set active_route = 'untagged' %}
+            {% elseif current_route == 'tagged' %}
+               {% set active_route = 'tagged' %}
             {% endif %}
 
             <li class="bold {% if active_route == 'unread' %}active{% endif %}">

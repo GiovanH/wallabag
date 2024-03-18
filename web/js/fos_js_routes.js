@@ -82,6 +82,9 @@ fos.Router.setData({
     untagged: {
       tokens: [['variable', '/', '[^/]++', 'page'], ['text', '/untagged/list']], defaults: { page: '1' }, requirements: [], hosttokens: [],
     },
+    tagged: {
+      tokens: [['variable', '/', '[^/]++', 'page'], ['text', '/tagged/list']], defaults: { page: '1' }, requirements: [], hosttokens: [],
+    },
     archive_rss: {
       tokens: [['text', '/archive.xml'], ['variable', '/', '[^/]++', 'token'], ['variable', '/', '[^/]++', 'username']], defaults: [], requirements: [], hosttokens: [],
     },

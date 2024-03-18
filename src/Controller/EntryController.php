@@ -344,6 +344,21 @@ class EntryController extends AbstractController
     }
 
     /**
+     * Shows untagged articles for current user.
+     *
+     * @param int $page
+     *
+     * @Route("/tagged/{tagId}/list/{page}", name="tagged", defaults={"page" = "1"})
+     *
+     * @return Response
+     */
+    public function showTaggedEntriesAction(Request $request, $tagId, $page)
+    {
+        $request->query->set('tagId', $tagId);
+        return $this->showEntries('tagged', $request, $page);
+    }
+
+    /**
      * Shows entries with annotations for current user.
      *
      * @param int $page
@@ -619,6 +634,9 @@ class EntryController extends AbstractController
         switch ($type) {
             case 'search':
                 $qb = $this->entryRepository->getBuilderForSearchByUser($this->getUser()->getId(), $searchTerm, $currentRoute);
+                break;
+            case 'tagged':
+                $qb = $this->entryRepository->getBuilderForTaggedByUser($this->getUser()->getId(), $request->query->get('tagId'));
                 break;
             case 'untagged':
                 $qb = $this->entryRepository->getBuilderForUntaggedByUser($this->getUser()->getId());

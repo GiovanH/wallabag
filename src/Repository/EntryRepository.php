@@ -214,6 +214,19 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retrieve a sorted list of tagged entries for a user.
+     *
+     * @param int $userId
+     * @param int $tagId
+     *
+     * @return QueryBuilder
+     */
+    public function getBuilderForTaggedByUser($userId, $tagId)
+    {
+        return $this->sortQueryBuilder($this->getRawBuilderForTaggedByUser($userId, $tagId));
+    }
+
+    /**
      * Retrieve entries with annotations for a user.
      *
      * @param int $userId
@@ -255,6 +268,21 @@ class EntryRepository extends ServiceEntityRepository
         return $this->getQueryBuilderByUser($userId)
             ->leftJoin('e.tags', 't')
             ->andWhere('t.id is null');
+    }
+
+    /**
+     * Retrieve entries for a user with a given tag.
+     *
+     * @param int $userId
+     * @param int $tagId
+     *
+     * @return QueryBuilder
+     */
+    public function getRawBuilderForTaggedByUser($userId, $tagId)
+    {
+        return $this->getQueryBuilderByUser($userId)
+            ->leftJoin('e.tags', 't')
+            ->andWhere('t.id = :tagId')->setParameter('tagId', $tagId);
     }
 
     /**
